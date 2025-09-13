@@ -9,9 +9,9 @@ public class UsuarioModel
     public string Email { get; set; } = string.Empty;
     public string Token { get; set; } = string.Empty;
     public DateTime DataNascimento { get; set; }
-    public DateTime DataCriacao { get; set; }
-    public DateTime DataAlteracao { get; set; }
-    public byte[] SenhaHash { get; set; }
-    public byte[] SenhaSalt { get; set; }
+    public DateTime DataCriacao { get; set; } = DateTime.Now;
+    public DateTime DataAlteracao { get; set; }= DateTime.Now;
+    public byte[] SenhaHash { get; set; } = new byte[0];
+    public byte[] SenhaSalt { get; set; } = new byte[0];
 
 }
