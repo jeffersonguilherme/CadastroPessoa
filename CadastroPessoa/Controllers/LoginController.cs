@@ -1,4 +1,5 @@
 using CadastroPessoa.Models.Dtos.Usuario.Request;
+using CadastroPessoa.Services.Usuario;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroPessoa.Controllers;
@@ -7,12 +8,17 @@ namespace CadastroPessoa.Controllers;
 [ApiController]
 public class LoginController : ControllerBase
 {
-
+    private readonly IUsuarioInterface _usuarioInterface;
+    public LoginController(IUsuarioInterface usuarioInterface)
+    {
+        _usuarioInterface = usuarioInterface;
+    }
 
     [HttpPost("register")]
-    public IActionResult RegistrarUsuairo(UsuarioDto usuarioDto) 
+    public async Task<IActionResult> RegistrarUsuairo(UsuarioDto usuarioDto) 
     {
-        return Ok();
+        var usuario = await _usuarioInterface.RegistarUsuario(usuarioDto);
+        return Ok(usuario);
     }
 
 }

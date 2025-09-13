@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CadastroPessoa")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+926d16ce1a791557cad03c7657502ff7a5136962")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f78770913161c491989e00c057e9a53e46a64ba3")]
 [assembly: System.Reflection.AssemblyProductAttribute("CadastroPessoa")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CadastroPessoa")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

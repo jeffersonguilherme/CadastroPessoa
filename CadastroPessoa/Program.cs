@@ -1,4 +1,5 @@
 using CadastroPessoa.Data;
+using CadastroPessoa.Services.Senha;
 using CadastroPessoa.Services.Usuario;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUsuarioInterface, UsuarioServices>();
+builder.Services.AddScoped<ISenhaInterface, SenhaService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
