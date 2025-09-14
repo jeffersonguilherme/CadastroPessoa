@@ -15,7 +15,7 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> RegistrarUsuairo(UsuarioDto usuarioDto) 
+    public async Task<IActionResult> RegistrarUsuairo(UsuarioDto usuarioDto, int skip = 0, int take =25) 
     {
         var usuario = await _usuarioInterface.RegistarUsuario(usuarioDto);
         return Ok(usuario);

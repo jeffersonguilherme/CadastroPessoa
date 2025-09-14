@@ -7,4 +7,5 @@ namespace CadastroPessoa.Services.Usuario;
 public interface IUsuarioInterface
 {
     Task<ResponseModel<UsuarioModel>> RegistarUsuario(UsuarioDto usuarioDto);
+    Task<ResponseModel<List<UsuarioModel>>> ListarUsuarios(int skip, int take);
 }

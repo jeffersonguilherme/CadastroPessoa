@@ -3,6 +3,8 @@ using CadastroPessoa.Models;
 using CadastroPessoa.Models.Dtos.Responses;
 using CadastroPessoa.Models.Dtos.Usuario.Request;
 using CadastroPessoa.Services.Senha;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CadastroPessoa.Services.Usuario;
 
@@ -15,6 +17,25 @@ public class UsuarioServices : IUsuarioInterface
         _context = context;
         _senhaInterface = senhaInterface;
     }
+
+    public async Task<ResponseModel<List<UsuarioModel>>> ListarUsuarios(int skip, int take)
+    {
+        ResponseModel<List<UsuarioModel>> response = new ResponseModel<List<UsuarioModel>>();
+        try
+        {
+            var usuarios = await _context.Usuarios.Skip(skip).Take(take).ToListAsync();
+            response.Dados = usuarios;
+            response.Mensagem = "Usuários Localizados!";
+            return response;
+        }
+        catch (Exception ex)
+        {
+            response.Mensagem = ex.Message;
+            response.Status = false;
+            return response;
+        }
+    }
+
     public async Task<ResponseModel<UsuarioModel>> RegistarUsuario(UsuarioDto usuarioDto)
     {
         ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
@@ -67,4 +88,5 @@ public class UsuarioServices : IUsuarioInterface
         }
         return true;
     }
+
 }
