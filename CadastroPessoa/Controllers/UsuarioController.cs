@@ -1,3 +1,4 @@
+using CadastroPessoa.Models.Dtos.Usuario.Request;
 using CadastroPessoa.Services.Usuario;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,5 +19,18 @@ public class UsuarioController : ControllerBase
     {
         var usuarios = await _usuarioInterface.ListarUsuarios(skip, take);
         return Ok(usuarios);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> BuscarUsuarioPorId(Guid id)
+    {
+        var usuario = await _usuarioInterface.BuscarUsuarioPorId(id);
+        return Ok(usuario);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> EditarUsuario(UsuarioEdicaoDto usuarioEdicaoDto) {
+        var usuario = await _usuarioInterface.EditarUsuario(usuarioEdicaoDto);
+        return Ok(usuario);   
     }
 }

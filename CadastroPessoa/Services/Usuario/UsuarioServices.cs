@@ -18,6 +18,67 @@ public class UsuarioServices : IUsuarioInterface
         _senhaInterface = senhaInterface;
     }
 
+    public async Task<ResponseModel<UsuarioModel>> BuscarUsuarioPorId(Guid id)
+    {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+
+        try
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                response.Mensagem = "Usuário não localizado";
+                return response;
+            }
+            response.Dados = usuario;
+            response.Mensagem = "Usuário localizado!";
+            return response;
+        }
+        catch (Exception ex)
+        {
+            response.Mensagem = ex.Message;
+            response.Status = false;
+            return response;
+        }
+    }
+
+    public async Task<ResponseModel<UsuarioModel>> EditarUsuario(UsuarioEdicaoDto usuarioEdicaoDto)
+    {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+
+        try
+        {
+            var usuarioBanco = await _context.Usuarios.FindAsync(usuarioEdicaoDto.Id);
+
+            if (usuarioBanco == null)
+            {
+                response.Mensagem = "Usuario não localizando";
+                return response;
+            }
+
+            usuarioBanco.Nome = usuarioEdicaoDto.Nome;
+            usuarioBanco.Sobrenome = usuarioEdicaoDto.Sobrenome;
+            usuarioBanco.Usuario = usuarioEdicaoDto.Usuario;
+            usuarioBanco.Email = usuarioEdicaoDto.Email;
+            usuarioBanco.DataNascimento = usuarioEdicaoDto.DataNascimento;
+            usuarioBanco.DataAlteracao = DateTime.Now;
+
+            _context.Update(usuarioBanco);
+            await _context.SaveChangesAsync();
+
+            response.Mensagem = "Usuario Editado com sucesso";
+            response.Dados = usuarioBanco;
+            
+            return response;
+            }
+        catch (Exception ex)
+        {
+            response.Mensagem = ex.Message;
+            response.Status = false;
+            return response;
+        }
+    }
+
     public async Task<ResponseModel<List<UsuarioModel>>> ListarUsuarios(int skip, int take)
     {
         ResponseModel<List<UsuarioModel>> response = new ResponseModel<List<UsuarioModel>>();
