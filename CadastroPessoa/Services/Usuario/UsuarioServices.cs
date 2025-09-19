@@ -1,5 +1,6 @@
 using CadastroPessoa.Data;
 using CadastroPessoa.Models;
+using CadastroPessoa.Models.Dtos.Login;
 using CadastroPessoa.Models.Dtos.Responses;
 using CadastroPessoa.Models.Dtos.Usuario.Request;
 using CadastroPessoa.Services.Senha;
@@ -87,6 +88,45 @@ public class UsuarioServices : IUsuarioInterface
             var usuarios = await _context.Usuarios.Skip(skip).Take(take).ToListAsync();
             response.Dados = usuarios;
             response.Mensagem = "Usuários Localizados!";
+            return response;
+        }
+        catch (Exception ex)
+        {
+            response.Mensagem = ex.Message;
+            response.Status = false;
+            return response;
+        }
+    }
+
+    public async Task<ResponseModel<UsuarioModel>> Login(UsuarioLoginDto usuarioLoginDto)
+    {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+
+        try
+        {
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(userbanco => userbanco.Email == usuarioLoginDto.Email);
+
+            if (usuario == null)
+            {
+                response.Mensagem = "Usuário não localizado!";
+                response.Status = false;
+                return response;
+            }
+            if (!_senhaInterface.VerificaSenhaHash(usuarioLoginDto.Senha, usuario.SenhaHash, usuario.SenhaSalt))
+            {
+                response.Mensagem = "Credenciais inválidas!";
+                response.Status = false;
+                return response;
+            }
+            var token = _senhaInterface.CriarToken(usuario);
+
+            usuario.Token = token;
+
+            _context.Update(usuario);
+            await _context.SaveChangesAsync();
+
+            response.Dados = usuario;
+            response.Mensagem = "Usuário logado com sucesso!";
             return response;
         }
         catch (Exception ex)

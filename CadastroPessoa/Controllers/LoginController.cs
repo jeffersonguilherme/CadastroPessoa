@@ -1,3 +1,4 @@
+using CadastroPessoa.Models.Dtos.Login;
 using CadastroPessoa.Models.Dtos.Usuario.Request;
 using CadastroPessoa.Services.Usuario;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,16 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> RegistrarUsuairo(UsuarioDto usuarioDto) 
+    public async Task<IActionResult> RegistrarUsuairo(UsuarioDto usuarioDto)
     {
         var usuario = await _usuarioInterface.RegistarUsuario(usuarioDto);
         return Ok(usuario);
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(UsuarioLoginDto usuarioLoginDto)
+    {
+        var usuario = await _usuarioInterface.Login(usuarioLoginDto);
+        return Ok(usuario);
+    }
 }

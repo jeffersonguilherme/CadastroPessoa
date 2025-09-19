@@ -1,4 +1,5 @@
 using CadastroPessoa.Models;
+using CadastroPessoa.Models.Dtos.Login;
 using CadastroPessoa.Models.Dtos.Responses;
 using CadastroPessoa.Models.Dtos.Usuario.Request;
 
@@ -11,4 +12,5 @@ public interface IUsuarioInterface
     Task<ResponseModel<UsuarioModel>> BuscarUsuarioPorId(Guid id);
     Task<ResponseModel<UsuarioModel>> EditarUsuario(UsuarioEdicaoDto usuarioEdicaoDto);
     Task<ResponseModel<UsuarioModel>> RemoveUsuario(Guid id);
+    Task<ResponseModel<UsuarioModel>> Login(UsuarioLoginDto usuarioLoginDto);
 }
