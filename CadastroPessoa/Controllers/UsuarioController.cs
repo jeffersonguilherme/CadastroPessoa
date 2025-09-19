@@ -29,8 +29,16 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> EditarUsuario(UsuarioEdicaoDto usuarioEdicaoDto) {
+    public async Task<IActionResult> EditarUsuario(UsuarioEdicaoDto usuarioEdicaoDto)
+    {
         var usuario = await _usuarioInterface.EditarUsuario(usuarioEdicaoDto);
-        return Ok(usuario);   
+        return Ok(usuario);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveUsuario(Guid id)
+    {
+        var usuario = await _usuarioInterface.RemoveUsuario(id);
+        return Ok(usuario);
     }
 }

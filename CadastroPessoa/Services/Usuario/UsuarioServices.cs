@@ -137,6 +137,34 @@ public class UsuarioServices : IUsuarioInterface
             return response;
         }
     }
+
+    public async Task<ResponseModel<UsuarioModel>> RemoveUsuario(Guid id)
+    {
+        ResponseModel<UsuarioModel> response = new ResponseModel<UsuarioModel>();
+
+        try
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                response.Mensagem = "Usuario não localizado!";
+                return response;
+            }
+            response.Dados = usuario;
+            response.Mensagem = "Usuário Deletado com sucesso!";
+
+            _context.Remove(usuario);
+            await _context.SaveChangesAsync();
+            return response;
+        }
+        catch (Exception ex)
+        {
+            response.Mensagem = ex.Message;
+            response.Status = false;
+            return response;
+        }
+    }
+
     private bool VerificaSeExisteEmailUsuario(UsuarioDto usuarioDto)
     {
         var usuario = _context.Usuarios.FirstOrDefault(
